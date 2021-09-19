@@ -3,35 +3,92 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 import ChatBot from 'react-native-chatbot-expo';
 import Menu from './menu';
+import TextToSpeech from './textToSpeech';
 
 const ChatScreen = ({restaurantName}) => {
-    console.log(restaurantName)
-    const [steps, setSteps] = useState([]);
-    const [keywords, setKeywords] = useState([]);
+  const [chosenMenuItem, setChosenMenuItem] = useState('');
+  const [steps, setSteps] = useState([
+      {
+        id: 'welcome_1',
+        message: `Welcome to ${restaurantName}.`,
+        trigger: 'welcome_2',
+      },
+      {
+        id: 'welcome_2',
+        message: 'Type a keyword(s) relating to your order or a menu item.',
+        trigger: 'search',
+      }, 
+      {
+        id: 'search', 
+        user: true,
+        trigger: 'retrieve'
+      },
+      {
+        id: 'retrieve',
+        component: <Menu restaurantName = {restaurantName} onMenuItemUpdate = {setChosenMenuItem} />,
+        waitAction: true,
+        trigger: 'measurement_type'
+      },
+      {
+        id: 'measurement_type',
+        message: 'What is the measurement type?',
+        trigger: 'measurement_options',
+      },
+      {
+        id: 'measurement_options',
+        options: [
+          { value: 'cup', label: 'Cup', trigger: 'cup_message' },
+          { value: 'pack', label: 'Pack', trigger: 'pack_message' },
+        ],
+      },
+      {
+        id: 'pack_message',
+        message: 'Pack size?',
+        trigger: 'pack_options'
+      },
+      {
+        id: 'pack_options',
+        options: [
+          { value: '5', label: '5', trigger: 'text_to_speech' },
+          { value: '10', label: '10', trigger: 'text_to_speech' },
+          { value: '20', label: '20', trigger: 'text_to_speech' },
+          { value: '40', label: '40', trigger: 'text_to_speech' },
+          { value: '50', label: '50', trigger: 'text_to_speech' },
+        ],
+      },
+      {
+        id: 'cup_message',
+        message: 'Cup size?',
+        trigger: 'cup_options'
+      },
+      {
+        id: 'cup_options',
+        options: [
+          { value: 'small', label: 'small', trigger: 'text_to_speech' },
+          { value: 'medium', label: 'medium', trigger: 'text_to_speech' },
+          { value: 'large', label: 'large', trigger: 'text_to_speech' },
+        ],
+
+      },
+      {
+        id: 'text_to_speech',
+        component: <TextToSpeech chosenMenuItem = {chosenMenuItem} />,
+        waitAction: true,
+        end: true
+      }
+  ]);
 
     useEffect(() => {
+        setSteps(steps.slice(-1));
         setSteps(steps => [...steps, 
           {
-            id: '0',
-            message: `Welcome to ${restaurantName}.`,
-            trigger: '1',
-          },
-          {
-            id: '1',
-            message: 'Type a keyword(s) relating to your order or a menu item.',
-            trigger: 'search',
-          }, 
-          {
-            id: 'search', 
-            user: true,
-            trigger: '3'
-          },
-          {
-            id: '3',
-            component: <Menu restaurantName = {restaurantName} />
+            id: 'text_to_speech',
+            component: <TextToSpeech chosenMenuItem = {chosenMenuItem} />,
+            waitAction: true,
+            end: true
           }
       ])
-    }, [])
+    }, [chosenMenuItem])
 
     return (
       <ThemeProvider theme={theme}>

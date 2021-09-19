@@ -1,6 +1,10 @@
 import Environment from '../config/environment';
 import brandIds from '../brand_ids.json';
 
+//Private members
+var menuItem = '';
+
+//Public members
 export const getNearbyRestaurant = async (latitude, longitude) => {
     try{
         let type = 'restaurant';
@@ -51,4 +55,12 @@ export const searchMenuItems = async(keyword, restaurantName) => {
         console.log(err);
         return null;
     }
+}
+
+export const setChosenMenuItem = (item) => {
+    menuItem = item;
+}
+
+export const getChosenMenuItem = () => {
+    return menuItem
 }
