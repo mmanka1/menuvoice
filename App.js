@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Location from 'expo-location';
 import ChatScreen from './screens/chatScreen';
-import {getNearbyRestaurants} from './controller/chatBotController';
+import {getNearbyRestaurant} from './controller/chatBotController';
 
 const App = () => {
   const [location, setLocation] = useState(null);
@@ -21,7 +21,7 @@ const App = () => {
       if (!errorMsg) {
         if (location) {
            if (location.coords)
-             var restaurantName = await getNearbyRestaurants(location.coords.latitude, location.coords.longitude);
+             var restaurantName = await getNearbyRestaurant(location.coords.latitude, location.coords.longitude);
              setRestaurantName(restaurantName)
         }
      }

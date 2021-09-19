@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 import ChatBot from 'react-native-chatbot-expo';
-import { setStatusBarNetworkActivityIndicatorVisible, setStatusBarTranslucent } from 'expo-status-bar';
+import Menu from './menu';
 
 const ChatScreen = ({restaurantName}) => {
     console.log(restaurantName)
     const [steps, setSteps] = useState([]);
+    const [keywords, setKeywords] = useState([]);
+
     useEffect(() => {
         setSteps(steps => [...steps, 
           {
@@ -17,12 +19,16 @@ const ChatScreen = ({restaurantName}) => {
           {
             id: '1',
             message: 'Type a keyword(s) relating to your order or a menu item.',
-            trigger: '2',
+            trigger: 'search',
           }, 
           {
-            id: '2', 
+            id: 'search', 
             user: true,
-            end: true
+            trigger: '3'
+          },
+          {
+            id: '3',
+            component: <Menu restaurantName = {restaurantName} />
           }
       ])
     }, [])
