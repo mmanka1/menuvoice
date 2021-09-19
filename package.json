@@ -17,7 +17,9 @@
     "react-native-chatbot-expo": "git+https://github.com/jzarca01/react-native-chatbot-expo.git",
     "react-native-svg": "12.1.1",
     "react-native-web": "~0.13.12",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.1",
+    "expo-location": "~12.1.2",
+    "expo-constants": "~11.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

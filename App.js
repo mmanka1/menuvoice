@@ -1,11 +1,40 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import * as Location from 'expo-location';
 import ChatScreen from './screens/chatScreen';
+import {getNearbyRestaurants} from './controller/chatBotController';
 
-export default App = () => {
+const App = () => {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [restaurantName, setRestaurantName] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      if (!errorMsg) {
+        if (location) {
+           if (location.coords)
+             var restaurantName = await getNearbyRestaurants(location.coords.latitude, location.coords.longitude);
+             setRestaurantName(restaurantName)
+        }
+     }
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <ChatScreen/>
+      {
+        restaurantName !== null?
+          <ChatScreen restaurantName = {restaurantName}/>:
+          <></>
+      }
     </View>
   );
 }
@@ -13,10 +42,10 @@ export default App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 75,
-    marginBottom: 50,
+    paddingTop: 50
   },
 });
+
+export default App
