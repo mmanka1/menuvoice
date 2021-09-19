@@ -40,10 +40,10 @@ const Menu = ({steps, triggerNextStep, restaurantName}) => {
                       onPress = {() => triggerNext(item.food_name)}
                       >
                       <Avatar size = 'medium' source={item.photo.thumb !== undefined ?{ uri: item.photo.thumb}: {uri: ''}} />
-                      <ListItem.Content style = {{flex: 0.6}}>
-                          <ListItem.Title>{item.food_name !== undefined ? item.food_name : ''}</ListItem.Title>
-                          <ListItem.Subtitle>{item.brand_name !== undefined ? item.brand_name: '' }</ListItem.Subtitle>
-                          <ListItem.Subtitle>{item.nf_calories !== undefined ? `${item.nf_calories} calories`: '' }</ListItem.Subtitle>
+                      <ListItem.Content style = {{flex: 0.5}}>
+                          <ListItem.Title style = {{fontSize: 15}}>{item.food_name !== undefined ? item.food_name : ''}</ListItem.Title>
+                          <ListItem.Subtitle style = {{fontSize: 12}}>{item.brand_name !== undefined ? item.brand_name: '' }</ListItem.Subtitle>
+                          <ListItem.Subtitle style = {{fontSize: 12}}>{item.nf_calories !== undefined ? `${item.nf_calories} calories`: '' }</ListItem.Subtitle>
                       </ListItem.Content>
                   </ListItem>
               )}

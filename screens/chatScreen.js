@@ -10,12 +10,13 @@ const ChatScreen = ({restaurantName}) => {
   const [steps, setSteps] = useState([
       {
         id: 'welcome_1',
-        message: `Welcome to ${restaurantName}.`,
+        message: `You are currently at ${restaurantName}.`,
         trigger: 'welcome_2',
       },
+
       {
         id: 'welcome_2',
-        message: 'Type a keyword(s) relating to your order or a menu item.',
+        message: 'Type a keyword(s) to choose a menu item.',
         trigger: 'search',
       }, 
       {
@@ -41,6 +42,7 @@ const ChatScreen = ({restaurantName}) => {
           { value: 'pack', label: 'Pack', trigger: 'pack_message' },
         ],
       },
+
       {
         id: 'pack_message',
         message: 'Pack size?',
@@ -50,7 +52,9 @@ const ChatScreen = ({restaurantName}) => {
         id: 'pack_options',
         options: [
           { value: '5', label: '5', trigger: 'text_to_speech' },
+          { value: '6', label: '6', trigger: 'text_to_speech' },
           { value: '10', label: '10', trigger: 'text_to_speech' },
+          { value: '12', label: '12', trigger: 'text_to_speech' },
           { value: '20', label: '20', trigger: 'text_to_speech' },
           { value: '40', label: '40', trigger: 'text_to_speech' },
           { value: '50', label: '50', trigger: 'text_to_speech' },

@@ -20,7 +20,8 @@
     "react-native-elements": "^3.4.2",
     "react-native-svg": "12.1.1",
     "react-native-web": "~0.13.12",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.1",
+    "expo-speech": "~9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

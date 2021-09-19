@@ -9,7 +9,7 @@ export const getNearbyRestaurant = async (latitude, longitude) => {
     try{
         let type = 'restaurant';
         let rankby = 'distance';
-        let url = `${Environment['GOOGLE_MAPS_API_ENDPOINT']}location=${latitude}%2C${longitude}&rankby=${rankby}&type=${type}&key=${Environment['GOOGLE_MAPS_API_KEY']}`;
+        let url = `${Environment['GOOGLE_MAPS_API_ENDPOINT']}location=${latitude}%2C${longitude}&rankby=${rankby}&type=${type}&key=${Environment['GOOGLE_API_KEY']}`;
         let response = await fetch(url, 
             {
                 headers: {
@@ -63,4 +63,33 @@ export const setChosenMenuItem = (item) => {
 
 export const getChosenMenuItem = () => {
     return menuItem
+}
+
+export const convertTextToSpeech = async (measurement, quantity, item) => {
+    let url = `${Environment['GOOGLE_TEXT_SYNTHESIZER_ENDPOINT']}&key=${Environment['GOOGLE_API_KEY']}`;
+    let body = {
+        'input':{
+            'text': `Hi, can I please order a ${quantity} ${measurement} of ${item}?`
+          },
+          'voice':{
+            'languageCode':'en-gb',
+            'name':'en-GB-Standard-A',
+            'ssmlGender':'FEMALE'
+          },
+          'audioConfig':{
+            'audioEncoding':'MP3'
+          }
+    }
+    let response = await fetch(url,
+        {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: body
+        }
+    )
+    let responseJson = await response.json();
+    console.log(responseJson);
 }

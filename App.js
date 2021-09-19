@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
 import * as Location from 'expo-location';
 import ChatScreen from './screens/chatScreen';
 import {getNearbyRestaurant} from './controller/chatBotController';
+
+console.disableYellowBox = true;
 
 const App = () => {
   const [location, setLocation] = useState(null);
